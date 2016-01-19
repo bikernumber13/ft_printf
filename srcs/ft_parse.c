@@ -12,7 +12,7 @@
 
 #include "libftprintf.h"
 
-char	*ft_parse2(char *tmp, char format, t_glob *global, t_list *list)
+static char	*ft_parse2(char *tmp, char format, t_glob *global, t_list *list)
 {
 	int		i;
 	char	*save;
@@ -33,10 +33,10 @@ char	*ft_parse2(char *tmp, char format, t_glob *global, t_list *list)
 		save++;
 	}
 	list->flags = ft_strndup(tmp, format);
-	return (ft_strdup(list->flags));
+	return (ft_strdup("\0"));
 }
 
-char		*ft_parse1(const char *format, t_glob *global, t_list *list, int i)
+static char		*ft_parse1(const char *format, t_glob *global, t_list *list, int i)
 {
 	char	*tmp;
 
@@ -62,13 +62,11 @@ char		*ft_parse1(const char *format, t_glob *global, t_list *list, int i)
 	return (ft_strchr(tmp, (char)*format));
 }
 
-int			ft_parse(const char *format, t_glob *global)
+int			ft_parse(const char *format, t_glob *global, t_list	*list)
 {
-	t_list	*list;
 	char	*tmp;
 	char	*tmp2;
 
-	list = global->first;
 	while (*format)
 	{
 		tmp2 = (char*)format;

@@ -39,7 +39,7 @@ typedef struct		s_glob
 }					t_glob;
 
 void				ft_putchar(char c);
-void				ft_putstr(char const *s);
+int					ft_putstr(char const *s);
 size_t				ft_strlen(const char *s);
 char				*ft_strcpy(char *dst, const char *src);
 char				*ft_strncpy(char *dst, const char *src, size_t n);
@@ -91,7 +91,9 @@ void				ft_striter(char *s, void (*f)(char *));
 void				ft_striteri(char *s, void (*f)(unsigned int, char *));
 char				*ft_strjoin(char const *s1, char const *s2);
 int					ft_printf(const char *format, ...);
-int					ft_parse(const char *format, t_glob *global);
+int					ft_parse(const char *format, t_glob *global, t_list	*list);
 char				*ft_strndup(const char *s1, char s2);
+int 				ft_printf_part1(t_glob *global, va_list ap, t_list *tmp);
+int	 				ft_check(t_glob *global);
 
 #endif

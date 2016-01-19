@@ -12,42 +12,23 @@
 
 #include "libftprintf.h"
 
-int		ft_iniglobal(const char *format, t_glob *global)
+static int		ft_iniglobal(const char *format, t_glob **global)
 {
-	t_list *list;
+	t_glob *new_glob;
 
-	if (!(list = (t_list*)malloc(sizeof(t_list))))
+	if (!(*global = (t_glob*)malloc(sizeof(t_glob))))
 		return (-1);
-	if (!(global = (t_glob*)malloc(sizeof(t_glob))))
+	new_glob = *global;
+	if (!(new_glob->first = (t_list*)malloc(sizeof(t_list))))
 		return (-1);
-	if (!(global->option = ft_strdup("sSpdDioOuUxXcC")))
+	if (!(new_glob->option = ft_strdup("sSpdiDoOuUxXcC")))
 		return (-1);
-	if (!(global->flags_off = ft_strdup("#0-+ ")))
+	if (!(new_glob->flags_off = ft_strdup("#0-+ .")))
 		return (-1);
-	if (!(global->conv_off = ft_strdup("hljz")))
+	if (!(new_glob->conv_off = ft_strdup("hljz")))
 		return (-1);
-	global->first = list;
-	global->first->txt = NULL;
-	if (ft_parse(format, global) < 0)
+	if (ft_parse(format, new_glob, new_glob->first) < 0)
 		return (-1);
-	 //CODE SUIVANT A ENLEVER : TEST LISTE CHAINEE 
-	while (global->first->next)
-	{
-		ft_putstr("texte : ");
-		ft_putendl(global->first->txt);
-		ft_putendl("%");
-		ft_putstr("flags : ");
-		ft_putendl(global->first->flags);
-		if (ft_strcmp(global->first->flags, global->first->conv) != 0)
-		{
-			ft_putstr("conv : ");
-			ft_putendl(global->first->conv);
-		}
-		ft_putstr("opt : ");
-		ft_putchar(global->first->opt);
-		ft_putchar('\n');
-		global->first = global->first->next;
-	}
 	return (0);
 }
 
@@ -55,19 +36,22 @@ int		ft_printf(const char *format, ...)
 {
 	va_list ap;
 	t_glob	*global;
-	
+	int     result;
+
 	global = NULL;
 	va_start (ap, format);
-	if (ft_iniglobal(format, global) == -1)
+	if (ft_iniglobal(format, &global) == -1)
 		return (-1);
+	result = ft_printf_part1(global, ap, global->first);
 	va_end (ap);
-	return (0);
+	// FREEEEEEEEEEEEEEEE
+	return (result);
 }
 /*
 options
 s == char *
 S == ls 
-p == void * == hexadecimal
+p == void * == hexadecimal (0x)
 d == int => chiffre decimal signe
 D == long int => signe decimal
 i == int => chiffre decimal signe
@@ -90,11 +74,18 @@ z == size_t or ssize_t
 --------------------------
 autres
 %% == affiche un '%'
-# == la valeur doit etre convertie dans une autre forme 
-0 == indique le remplissage avec des zeros
-- == justifie a gauche du champ
-+ == signe + ou - imprime
-space == laisse un espace devant un nombre positif pour egal en longueur a un nombre negatif
-taille min du champ
-. / * == precision
+# == ajoute 0 octal non nul, 0x pour '#x', 0X pour '#X' => int
+0 == indique le remplissage avec des zeros => int
+- == justifie a gauche du champ => int
++ == signe + ou - imprime => int
+space == laisse un espace devant un nombre positif pour egal en longueur a un nombre negatif => int
+. / * == precision => char
+
+Ordre des precisions :
+1) '-' on colle ou pas a gauche
+2) 'numbers' == numbre d espaces avant l impression
+3) '.' == si < taille champ, on remplis de 0. Si > taille champ, 0 ecrase les espaces
+4) ' ' == space before printf == longueur d un negatif 
+5) '+' == affiche + ou - => end	
+5) '#' == affiche 0, ou 0x ou 0X => end
 */

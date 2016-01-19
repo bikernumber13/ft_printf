@@ -15,9 +15,9 @@
 int	main(void)
 {
 	int		numb = 42;
-	char	test[6] = "hihi\n";
-	
-	if (ft_printf("Bonjour %#2ld, %2.3s", numb, test) == -1)
+	char	test[5] = "hihi\n";
+
+	if (ft_printf("Bonjour %2lc, %%10, %2.4s", numb, test) == -1)
 		{
 			ft_putendl("Error");
 			exit(EXIT_FAILURE);
