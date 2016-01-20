@@ -1,23 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putnbr.c                                        :+:      :+:    :+:   */
+/*   ft_putnbr_base.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maboukra <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mbouhier <mbouhier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/11/27 13:35:57 by maboukra          #+#    #+#             */
-/*   Updated: 2016/01/04 14:48:07 by maboukra         ###   ########.fr       */
+/*   Created: 2016/01/20 11:06:05 by mbouhier          #+#    #+#             */
+/*   Updated: 2016/01/20 11:06:06 by mbouhier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
 
-void	ft_putnbr(int n)
+void ft_putnbr_base(int n, char *base, t_glob *global)
 {
 	if (n == -2147483648)
 	{
-		ft_putnbr(-214748364);
-		ft_putnbr(8);
+		ft_putnbr_base(-214748364, base, global);
+		ft_putnbr_base(8, base, global);
+		global->ret += 11;
 	}
 	else
 	{
@@ -25,13 +26,17 @@ void	ft_putnbr(int n)
 		{
 			n = -n;
 			ft_putchar('-');
+			global->ret += 1;
 		}
-		if (n > 9)
+		if (n > (int)ft_strlen(base))
 		{
-			ft_putnbr(n / 10);
-			ft_putnbr(n % 10);
+			ft_putnbr_base(n / (int)ft_strlen(base), base, global);
+			ft_putnbr_base(n % (int)ft_strlen(base), base, global);
 		}
 		else
-			ft_putchar(n + '0');
+		{
+			ft_putchar(base[n]);
+			global->ret += 1;
+		}
 	}
 }

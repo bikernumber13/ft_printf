@@ -1,37 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putnbr.c                                        :+:      :+:    :+:   */
+/*   ft_char.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maboukra <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mbouhier <mbouhier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/11/27 13:35:57 by maboukra          #+#    #+#             */
-/*   Updated: 2016/01/04 14:48:07 by maboukra         ###   ########.fr       */
+/*   Created: 2016/01/20 16:15:38 by mbouhier          #+#    #+#             */
+/*   Updated: 2016/01/20 16:15:41 by mbouhier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
 
-void	ft_putnbr(int n)
+int ft_octal()
 {
-	if (n == -2147483648)
-	{
-		ft_putnbr(-214748364);
-		ft_putnbr(8);
-	}
-	else
-	{
-		if (n < 0)
-		{
-			n = -n;
-			ft_putchar('-');
-		}
-		if (n > 9)
-		{
-			ft_putnbr(n / 10);
-			ft_putnbr(n % 10);
-		}
-		else
-			ft_putchar(n + '0');
-	}
+
+}
+
+int	ft_hexa()
+{
+
+}
+
+int ft_string(a_list ap, t_list *tmp, char *flags, int result)
+{
+	char *str;
+	
+	str = va_arg(ap, char*);
+	
+	return (result);
+}
+
+int ft_char()
+{
+	s
 }

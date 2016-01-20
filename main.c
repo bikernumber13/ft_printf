@@ -14,13 +14,13 @@
 
 int	main(void)
 {
+	int result;
 	int		numb = 42;
-	char	test[5] = "hihi\n";
+	char	test[5] = "hihi";
 
-	if (ft_printf("Bonjour %2lc, %%10, %2.4s", numb, test) == -1)
-		{
-			ft_putendl("Error");
-			exit(EXIT_FAILURE);
-		}
+	result = 0;
+	result = ft_printf("Bonjour %2ld, %%10, %s", numb, test);
+	ft_putendl("\n------FINAL-------");	
+	ft_putnbr(result);
 	return (0);
 }

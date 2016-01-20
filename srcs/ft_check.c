@@ -26,6 +26,9 @@ static int	ft_conv(char *conv, char opt)
 		(opt == 'c' && *conv != ('l' || '\0')) ||
 		(opt == 'C' && *conv != '\0'))
 		return (-1);
+	if ((*conv == 'h' && opt != ('d' || 'i' || 'o' || 'u' || 'x' || 'X')) || 
+		(*conv == 'l' && opt != ('d' || 'i' || 'o' || 'u' || 'x' || 'X')))
+		return (-1);
 	return (1);
 }
 
@@ -36,6 +39,8 @@ static int ft_check_end(int *tab, char opt)
 		&& (opt == 's' || opt == 'S' || opt == 'c' || opt == 'C'))
 		return (-1);
 	else if (tab[5] == 1 && (opt != 'x' || opt != 'X'))
+		return (-1);
+	if ((tab[0] == 1 && tab[6] == 1) || (tab[1] == 1 && tab[3] == 1))
 		return (-1);	
 	return (1);
 }
@@ -55,7 +60,7 @@ static int	ft_flag(char *flags, char opt)
 		else if (*flags == '+')
 			tab[1] = 1;
 		else if (ft_isdigit(*flags) == 1)
-			tab[2] *= 10 + (*flags + '0');
+			tab[2] = 1;
 		else if (*flags == ' ')
 			tab[3] = 1;
 		else if (*flags == '.')
@@ -76,17 +81,12 @@ static int ft_check_start(char *flags, char opt, char *conv)
 		flags++;
 		while (*flags != '%')
 			flags++;
-	}
+	}  
 	return (ft_flag(flags, opt) == 1 && ft_conv(conv, opt) == 1 ? 1 : -1);
 }
 
-int	ft_check(t_glob *global)
+int	ft_check(t_list *check, int	result)
 {
-	t_list *check;
-	int		result;
-
-	check = global->first;
-	result = 0;
 	while (check->next)
 	{
 		result = ft_check_start(check->flags, check->opt, check->conv) == 1 ? 1 : -1;
@@ -94,6 +94,5 @@ int	ft_check(t_glob *global)
 			break ;
 		check = check->next;
 	}
-	ft_putnbr(result);
 	return (result);
 }

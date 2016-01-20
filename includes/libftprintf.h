@@ -31,7 +31,6 @@ typedef struct 		s_list
 
 typedef struct		s_glob
 {
-	int 			ret;
 	char			*option;
 	char			*flags_off;
 	char			*conv_off;
@@ -93,7 +92,9 @@ char				*ft_strjoin(char const *s1, char const *s2);
 int					ft_printf(const char *format, ...);
 int					ft_parse(const char *format, t_glob *global, t_list	*list);
 char				*ft_strndup(const char *s1, char s2);
-int 				ft_printf_part1(t_glob *global, va_list ap, t_list *tmp);
-int	 				ft_check(t_glob *global);
+int 				ft_printf_part1(t_glob *global, va_list ap, t_list *tmp, int result);
+int	 				ft_check(t_list *check, int	result);
+void				ft_putnbr_base(int n, char *base, t_glob *global);
+int	 				ft_print_flags(char *flags, int result);
 
 #endif

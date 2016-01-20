@@ -29,7 +29,7 @@ SRCS_NAME = ft_printf.c ft_parse.c ft_atoi.c ft_bzero.c ft_isalnum.c ft_isalpha.
 		    ft_strmapi.c ft_strncat.c ft_strncmp.c ft_strncpy.c ft_strnequ.c \
 		    ft_strnew.c ft_strnstr.c ft_strrchr.c ft_strsplit.c ft_strstr.c \
 		    ft_strsub.c ft_strtrim.c ft_tolower.c ft_toupper.c ft_strndup.c \
-		    ft_printf_part1.c ft_check.c
+		    ft_printf_part1.c ft_check.c ft_putnbr_base.c ft_char.c 
 
 SRCO = $(SRCS_NAME:.c=.o)
 

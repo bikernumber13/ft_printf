@@ -42,7 +42,7 @@ int		ft_printf(const char *format, ...)
 	va_start (ap, format);
 	if (ft_iniglobal(format, &global) == -1)
 		return (-1);
-	result = ft_printf_part1(global, ap, global->first);
+	result = ft_printf_part1(global, ap, global->first, 0);
 	va_end (ap);
 	// FREEEEEEEEEEEEEEEE
 	return (result);
