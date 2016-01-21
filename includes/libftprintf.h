@@ -94,7 +94,8 @@ int					ft_parse(const char *format, t_glob *global, t_list	*list);
 char				*ft_strndup(const char *s1, char s2);
 int 				ft_printf_part1(t_glob *global, va_list ap, t_list *tmp, int result);
 int	 				ft_check(t_list *check, int	result);
-void				ft_putnbr_base(int n, char *base, t_glob *global);
+int					ft_putnbr_base(int n, char *base, int result);
 int	 				ft_print_flags(char *flags, int result);
+int  				ft_string(va_list ap, char *flags, int result);
 
 #endif

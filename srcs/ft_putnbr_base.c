@@ -12,13 +12,13 @@
 
 #include "libftprintf.h"
 
-void ft_putnbr_base(int n, char *base, t_glob *global)
+int ft_putnbr_base(int n, char *base, int result)
 {
 	if (n == -2147483648)
 	{
-		ft_putnbr_base(-214748364, base, global);
-		ft_putnbr_base(8, base, global);
-		global->ret += 11;
+		ft_putnbr_base(-214748364, base, result);
+		ft_putnbr_base(8, base, result);
+		result += 11;
 	}
 	else
 	{
@@ -26,17 +26,18 @@ void ft_putnbr_base(int n, char *base, t_glob *global)
 		{
 			n = -n;
 			ft_putchar('-');
-			global->ret += 1;
+			result += 1;
 		}
 		if (n > (int)ft_strlen(base))
 		{
-			ft_putnbr_base(n / (int)ft_strlen(base), base, global);
-			ft_putnbr_base(n % (int)ft_strlen(base), base, global);
+			ft_putnbr_base(n / (int)ft_strlen(base), base, result);
+			ft_putnbr_base(n % (int)ft_strlen(base), base, result);
 		}
 		else
 		{
 			ft_putchar(base[n]);
-			global->ret += 1;
+			result += 1;
 		}
 	}
+	return (result);
 }

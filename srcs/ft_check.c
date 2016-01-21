@@ -26,16 +26,15 @@ static int	ft_conv(char *conv, char opt)
 		(opt == 'c' && *conv != ('l' || '\0')) ||
 		(opt == 'C' && *conv != '\0'))
 		return (-1);
-	if ((*conv == 'h' && opt != ('d' || 'i' || 'o' || 'u' || 'x' || 'X')) || 
-		(*conv == 'l' && opt != ('d' || 'i' || 'o' || 'u' || 'x' || 'X')))
+	if ((*conv == 'h' && !ft_strchr("diouxX", opt)) || 
+		(*conv == 'l' && !ft_strchr("diouxX", opt)))
 		return (-1);
 	return (1);
 }
 
 static int ft_check_end(int *tab, char opt)
 {
-	if ((tab[1] == 1 || tab[2] > 0 || tab[3] == 1 || tab[5] == 1 ||
-		tab[6] == 1)
+	if ((tab[1] == 1 || tab[3] == 1 || tab[5] == 1 || tab[6] == 1)
 		&& (opt == 's' || opt == 'S' || opt == 'c' || opt == 'C'))
 		return (-1);
 	else if (tab[5] == 1 && (opt != 'x' || opt != 'X'))
@@ -45,12 +44,10 @@ static int ft_check_end(int *tab, char opt)
 	return (1);
 }
 
-static int	ft_flag(char *flags, char opt)
+static int	ft_flag(char *flags, char opt, int i)
 {	
 	int	tab[7];
-	int	i;
 
-	i = 0;
 	while (i < 6)
 		tab[i++] = 0;
 	while (*flags)
@@ -59,6 +56,9 @@ static int	ft_flag(char *flags, char opt)
 			tab[0] = 1;
 		else if (*flags == '+')
 			tab[1] = 1;
+		else if (*flags == '0' && ft_isdigit(*(flags - 1)) == 0 
+			&& *(flags - 1) != '.')
+			tab[6] = 1;
 		else if (ft_isdigit(*flags) == 1)
 			tab[2] = 1;
 		else if (*flags == ' ')
@@ -67,8 +67,6 @@ static int	ft_flag(char *flags, char opt)
 			tab[4] = 1;
 		else if (*flags == '#')
 			tab[5] = 1;
-		else if (*flags == '0')
-			tab[6] = 1;
 		flags++;
 	}
 	return (ft_check_end(tab, opt));
@@ -82,7 +80,7 @@ static int ft_check_start(char *flags, char opt, char *conv)
 		while (*flags != '%')
 			flags++;
 	}  
-	return (ft_flag(flags, opt) == 1 && ft_conv(conv, opt) == 1 ? 1 : -1);
+	return (ft_flag(flags, opt, 0) == 1 && ft_conv(conv, opt) == 1 ? 1 : -1);
 }
 
 int	ft_check(t_list *check, int	result)

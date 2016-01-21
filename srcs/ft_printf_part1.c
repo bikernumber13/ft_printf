@@ -14,9 +14,9 @@
 
 static int	ft_print_end(va_list ap, t_list *tmp, char *conv, int result)
 {
-	if (opt == 's' && *conv = '\0')
-		result += ft_string(ap, tmp, tmp->flags, 0);
-	else if (opt == 'S' || (opt == 's' && *conv = 'l'))
+	if (tmp->opt == 's' && *conv == '\0')
+		result += ft_string(ap, tmp->flags, 0);
+	/*else if (opt == 'S' || (opt == 's' && *conv = 'l'))
 		result += ft_wchar();
 	else if (opt == 'C' || (opt == 'c' && *conv = 'l')) 
 		result += ft_wint();
@@ -31,34 +31,14 @@ static int	ft_print_end(va_list ap, t_list *tmp, char *conv, int result)
 	else if ((opt == 'c' && *conv = '\0') || (*conv == 'h' && *(conv + 1) == 'h'))
 		result += ft_char();
 	else
-		result += ft_int();
-	//result += ft_print_flags(tmp->flags, 0);
-	return (result);
-}
-
-int	ft_print_flags(char *flags, int result)
-{
-	if (*flags == '%')
-	{
-		ft_putchar(*flags);
-		result++;
-		flags++;
-		while (*flags != '%')
-			{
-				ft_putchar(*flags);
-				result++;
-				flags++;
-			}
-	} 
+		result += ft_int();*/
 	return (result);
 }
 
 int			ft_printf_part1(t_glob *global, va_list ap, t_list *tmp, int result)
 {
-	int prout;
 	if (ft_check(tmp, 0) < 0)
 		exit(EXIT_FAILURE);
-	prout = va_arg(ap, int);
 	while (global->first->next)
 	{
 		if (ft_strlen(global->first->txt) > 0)

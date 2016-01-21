@@ -15,11 +15,10 @@
 int	main(void)
 {
 	int result;
-	int		numb = 42;
 	char	test[5] = "hihi";
 
 	result = 0;
-	result = ft_printf("Bonjour %2ld, %%10, %s", numb, test);
+	result = ft_printf("Bonjour %%10 ,%10.3s", test);
 	ft_putendl("\n------FINAL-------");	
 	ft_putnbr(result);
 	return (0);
